@@ -62,6 +62,15 @@ async def handler(event):
 
 💟𝗗𝗘𝗠𝗢 - 𝟭𝟬𝟬 𝗥𝗦💟''')
 
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.pay"))
+async def send_qr(event):
+    await client.send_file(
+        event.chat_id,
+        "qr.jpg",
+        caption="Scan and pay"
+    )
+    await event.delete()
+
 async def main():
     await client.start()
     print("Userbot running...")

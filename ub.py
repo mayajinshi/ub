@@ -62,6 +62,10 @@ async def handler(event):
 
 💟𝗗𝗘𝗠𝗢 - 𝟭𝟬𝟬 𝗥𝗦💟''')
 
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.b"))
+async def alive_msg(event):
+    await event.edit("boost kardo ise t.me/swapping_wifegf?boost ❤️")
+
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
 async def alive_msg(event):
     await event.edit("I'm alive my queen.. ❤️")

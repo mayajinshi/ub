@@ -30,6 +30,20 @@ client = TelegramClient(StringSession(session), api_id, api_hash)
 
 replied_users = set()
 
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.block"))
+async def block_user(event):
+    if event.is_private:
+        await client(BlockRequest(event.chat_id))
+        await event.delete()
+
+from telethon.tl.functions.contacts import UnblockRequest
+
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.unblock"))
+async def unblock_user(event):
+    if event.is_private:
+        await client(UnblockRequest(event.chat_id))
+        await event.edit("User unblocked.")
+
 @client.on(events.NewMessage(incoming=True))
 async def auto_price(event):
     if event.is_private and not event.out:
@@ -115,17 +129,19 @@ async def delete(event):
 async def help_cmd(event):
     await event.edit("""
 𝙇𝙄𝙎𝙏 𝙊𝙁 𝙑𝘼𝙇𝙄𝘿 𝘾𝙊𝙈𝙈𝘼𝙉𝘿𝙎:
-• .ping
-• .id
-• .time
-• .userinfo
-• .del
-• .help
-• .spam
-• .b
-• .alive
-• .pay
-__more cmds coming soon...__
+• .ping - test
+• .id - int id number
+• .time - time
+• .userinfo - information
+• .del - delete
+• .help - assist
+• .spam - spamming
+• .boost - boost link
+• .alive - run
+• .pay - pay
+• .rl - rate list
+• .block - block user
+• .unblock - unblock user
 """)
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.rl"))

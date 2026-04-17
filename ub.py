@@ -8,6 +8,7 @@ from threading import Thread
 import time
 from datetime import datetime
 from openai import OpenAI
+from telethon.tl.functions.contacts import BlockRequest
 
 app = Flask('')
 
@@ -34,8 +35,10 @@ replied_users = set()
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.block"))
 async def block_user(event):
     if event.is_private:
-        await client(BlockRequest(event.chat_id))
-        await event.delete()
+        entity = await client.get_entity(event.chat_id)
+        await client(BlockRequest(entity))
+        await event.edit("Blocked.")
+
 
 from telethon.tl.functions.contacts import UnblockRequest
 
@@ -86,7 +89,7 @@ async def auto_reply(event):
         if event.raw_text.lower() in ["hi", "hello", "hy", "hey"]:
             async with client.action(event.chat_id, 'typing'):
                 await asyncio.sleep(random.randint(2,4))
-            await event.reply(''' wait.. 2 min me aayi..''')
+            await event.reply(''' wait.. 2 min me aayi ❤️''')
 
 client_ai = OpenAI(api_key="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")
 
@@ -95,16 +98,20 @@ async def gpt_reply(event):
     prompt = event.pattern_match.group(1)
     await event.edit("Thinking...")
 
-    response = client_ai.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
+    try:
+        response = client_ai.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
+        )
 
-    answer = response.choices[0].message.content
-    await event.edit(answer)
+        answer = response.choices[0].message.content
+        await event.edit(answer)
 
+    except Exception as e:
+        await event.edit(f"Error: {e}")
+        
 @client.on(events.NewMessage(incoming=True))
 async def auto_repl(event):
     if event.is_private and not event.out:
@@ -160,6 +167,7 @@ async def help_cmd(event):
 • .rl - rate list
 • .block - block user
 • .unblock - unblock user
+• .q - ask chatgpt
 """)
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.rl"))

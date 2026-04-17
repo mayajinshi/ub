@@ -181,7 +181,7 @@ async def spam(event):
     for _ in range(count):
         await client.send_message(event.chat_id, text)
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.b"))
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.boost"))
 async def boost_msg(event):
     await event.edit("𝘽𝙊𝙊𝙎𝙏 𝙏𝙃𝙄𝙎 𝘾𝙃𝘼𝙉𝙉𝙀𝙇 t.me/swapping_wifegf?boost ❤️")
 

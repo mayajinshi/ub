@@ -7,6 +7,7 @@ from flask import Flask
 from threading import Thread
 import time
 from datetime import datetime
+from openai import OpenAI
 
 app = Flask('')
 
@@ -86,6 +87,23 @@ async def auto_reply(event):
             async with client.action(event.chat_id, 'typing'):
                 await asyncio.sleep(random.randint(2,4))
             await event.reply(''' wait.. 2 min me aayi..''')
+
+client_ai = OpenAI(api_key="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")
+
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.q (.+)"))
+async def gpt_reply(event):
+    prompt = event.pattern_match.group(1)
+    await event.edit("Thinking...")
+
+    response = client_ai.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+    answer = response.choices[0].message.content
+    await event.edit(answer)
 
 @client.on(events.NewMessage(incoming=True))
 async def auto_repl(event):

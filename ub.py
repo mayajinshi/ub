@@ -61,24 +61,24 @@ async def auto_reply(event):
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.ping"))
 async def ping(event):
     start = time.time()
-    msg = await event.edit("Pinging...")
+    msg = await event.edit("𝙋𝙞𝙣𝙜𝙞𝙣𝙜...")
     end = time.time()
-    await msg.edit(f"Pong! {round((end-start)*1000)} ms")
+    await msg.edit(f"𝗣𝗢𝗡𝗚! {round((end-start)*1000)} ms")
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.id"))
 async def get_id(event):
-    await event.edit(f"Chat ID: `{event.chat_id}`")
+    await event.edit(f"𝘾𝙃𝘼𝙏 𝙄𝘿: `{event.chat_id}`")
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.time"))
 async def time_cmd(event):
     now = datetime.now().strftime("%H:%M:%S")
-    await event.edit(f"Current Time: {now}")
+    await event.edit(f"𝘾𝙐𝙍𝙍𝙀𝙉𝙏 𝙏𝙄𝙈𝙀: {now}")
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.userinfo"))
 async def userinfo(event):
     user = await event.get_sender()
     await event.edit(
-        f"Name: {user.first_name}\nID: {user.id}"
+        f"𝙉𝘼𝙈𝙀: {user.first_name}\n𝙄𝘿: {user.id}"
     )
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.del"))
@@ -91,8 +91,18 @@ async def delete(event):
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.help"))
 async def help_cmd(event):
     await event.edit("""
-Commands:
-coming soon...
+𝙇𝙄𝙎𝙏 𝙊𝙁 𝙑𝘼𝙇𝙄𝘿 𝘾𝙊𝙈𝙈𝘼𝙉𝘿𝙎:
+• .ping
+• .id
+• .time
+• .userinfo
+• .del
+• .help
+• .spam
+• .b
+• .alive
+• .pay
+__more cmds coming soon...__
 """)
         
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.spam"))
@@ -107,7 +117,7 @@ async def spam(event):
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.b"))
 async def boost_msg(event):
-    await event.edit("boost kardo ise t.me/swapping_wifegf?boost ❤️")
+    await event.edit("𝘽𝙊𝙊𝙎𝙏 𝙏𝙃𝙄𝙎 𝘾𝙃𝘼𝙉𝙉𝙀𝙇 t.me/swapping_wifegf?boost ❤️")
 
 #@client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
 #async def alive_msg(event):
@@ -118,7 +128,7 @@ start_time = time.time()
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
 async def alive(event):
     uptime = int(time.time() - start_time)
-    await event.edit(f"⚡ Alive\nUptime: {uptime} sec")
+    await event.edit(f"⚡ 𝙕𝙄𝙉𝘿𝘼 𝙃𝙐...\nUptime: {uptime} sec")
     
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.pay"))
 async def send_qr(event):

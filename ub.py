@@ -209,7 +209,7 @@ async def spam(event):
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.boost"))
 async def boost_msg(event):
-    await event.edit("𝘽𝙊𝙊𝙎𝙏 𝙏𝙃𝙄𝙎 𝘾𝙃𝘼𝙉𝙉𝙀𝙇 t.me/swapping_wifegf?boost ❤️")
+    await event.edit("𝘽𝙊𝙊𝙎𝙏 𝙏𝙃𝙄𝙎 𝘾𝙃𝘼𝙉𝙉𝙀𝙇 𝙂𝙍𝙊𝙐𝙋 t.me/wife_swapping_gf?boost ❤️")
 
 #@client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
 #async def alive_msg(event):
@@ -243,10 +243,19 @@ async def send_qr(event):
     await client.send_file(
         event.chat_id,
         "qr.jpg",
-        caption="Scan and pay"
+        caption="𝙎𝘾𝘼𝙉 𝘼𝙉𝘿 𝙋𝘼𝙔 𝘽𝘼𝘽𝙀 💋"
     )
     await event.delete()
 
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.opay"))
+async def send_qr(event):
+    await client.send_file(
+        event.chat_id,
+        "oqr.jpg",
+        caption="𝙎𝘾𝘼𝙉 𝘼𝙉𝘿 𝙋𝘼𝙔 𝘽𝘼𝘽𝙀 💋"
+    )
+    await event.delete()
+    
 async def main():
     await client.start()
     print("Userbot running...")

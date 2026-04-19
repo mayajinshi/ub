@@ -49,18 +49,17 @@ async def unblock_user(event):
         await client(UnblockRequest(event.chat_id))
         await event.edit("User unblocked.")
 
-
-
 TARGET_GROUP_ID = -1003623091628
 
 @client.on(events.ChatAction())
 async def welcome_new_member(event):
-    if event.chat_id != TARGET_GROUP_ID:
-        return
-
-    if event.user_joined or event.user_added:
-        user = await event.get_user()
-        await event.reply(f"𝗪𝗘𝗟𝗖𝗢𝗠𝗘 {user.first_name} ❤️ \n\n𝗠𝗘𝗦𝗦𝗔𝗚𝗘 𝗠𝗘 𝗙𝗢𝗥 𝗙𝗨𝗡 & 𝗖𝗔𝗠 𝗦𝗛𝗢𝗪. 𝗠𝗨𝗔𝗔𝗔𝗛𝗛 💋")
+    if event.chat_id == TARGET_GROUP_ID:
+        if event.user_joined or event.user_added:
+            user = await event.get_user()
+            await client.send_message(
+                TARGET_GROUP_ID,
+                f"𝗪𝗘𝗟𝗖𝗢𝗠𝗘 {user.first_name} ❤️\n\n𝗠𝗘𝗦𝗦𝗔𝗚𝗘 𝗠𝗘 𝗙𝗢𝗥 𝗙𝗨𝗡 & 𝗖𝗔𝗠 𝗦𝗛𝗢𝗪. 𝗠𝗨𝗔𝗔𝗔𝗛𝗛 💋"
+            )
         
 @client.on(events.NewMessage(incoming=True))
 async def auto_price(event):

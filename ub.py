@@ -71,58 +71,76 @@ async def auto_price(event):
             replied_users.add(user_id)
 
             await asyncio.sleep(2)
-            await event.respond('''🐣🦋 𝗡𝗔𝗩𝗬𝗔 𝗔𝗩𝗔𝗜𝗟𝗔𝗕𝗟𝗘 🐣🦋
-🔴💦 𝗩𝗘𝗥𝗜𝗙𝗜𝗘𝗗 𝗠𝗢𝗗𝗘𝗟 💦🔴
-    
-           𝐃𝐄𝐌𝐎 𝐂𝐇𝐀𝐑𝐆𝐄
-          1 𝐌𝐈𝐍𝐔𝐓𝐄 - 100 𝐑𝐒
+            await event.respond('''🐣🦋 NAVYA AVAILABLE 🦋🐣
 
-🔞𝐓𝐈𝐌𝐄 𝐏𝐀𝐒𝐒 𝐃𝐈𝐑𝐄𝐂𝐓 𝐁𝐋𝐎C𝐊🔞
+Age: 21
+Figure: 34
 
- AGE - 21 FIGURE - 34  
-  
-𝐁𝐈𝐊𝐍𝐈 𝐒𝐇𝐎𝐖 10 𝐌𝐈𝐍 :- 1500 𝐑𝐒
+━━━━━━━━━━━━━━━
 
-𝐒𝐀𝐑𝐄𝐄 𝐒𝐇𝐎𝐖 10 𝐌𝐈𝐍 - 1500 𝐑𝐒
+💎 DEMO CHARGES
 
-𝐍𝐔𝐃𝐄𝐒 𝐏𝐈𝐂'𝐒 100 𝐑𝐒 𝐏𝐄𝐑 𝐏𝐈𝐂'𝐒
+1 Minute Demo - ₹100
 
-𝐀𝐍𝐀𝐋 𝐒𝐇𝐎𝐖 5 𝐌𝐈𝐍 - 1500 𝐑𝐒
-    
-𝐋𝐀𝐇𝐀𝐍𝐆𝐀 𝐒𝐇𝐎𝐖 1500 𝐑𝐒
+Nude Pics
+• ₹100 - 2 Pics
+• ₹200 - 2 Pics (With Face)
 
-🍷𝗦𝗣𝗘𝗖𝗜𝗔𝗟 𝗦𝗛𝗢𝗪 🍷
+━━━━━━━━━━━━━━━
 
-      🥵𝐂𝐔𝐌 𝐒𝐇𝐎𝐖🥵
-      5 𝐌𝐈𝐍𝐔𝐓𝐄 - 900  𝐑𝐒
-    10 𝐌𝐈𝐍𝐔𝐓𝐄 - 1400 𝐑𝐒
+🍷 SPECIAL SHOWS
 
-      🍸𝐎𝐈𝐋 𝐒𝐇𝐎𝐖🍸
-       5 𝐌𝐈𝐍𝐔𝐓𝐄 - 700
-     10 𝐌𝐈𝐍𝐔𝐓𝐄'𝐒 - 1400
+Bikini Show
+• 10 Minutes - ₹1100
 
-  🛁𝐒𝐇𝐎𝐖𝐄𝐑 𝐒𝐇𝐎𝐖🛁
-       5 𝐌𝐈𝐍𝐔𝐓𝐄 - 700
-  10 𝐌𝐈𝐍𝐔𝐓𝐄'𝐒 - 1500
+Saree Show
+• 10 Minutes - ₹1200
 
-📞𝗩𝗢𝗜𝗖𝗘 𝗖𝗔𝗟𝗟📞
+Lesbian Show
+• 5 Minutes - ₹1000
 
-  5 𝐌𝐈𝐍𝐔𝐓𝐄 - 250 𝐑𝐒
-10 𝐌𝐈𝐍𝐔𝐓𝐄'𝐒  - 500 𝐑𝐒
-15 𝐌𝐈𝐍𝐔𝐓𝐄'𝐒 - 750 𝐑𝐒 
+Anal Show
+• 5 Minutes - ₹1000
 
-  🎥𝗩𝗜𝗗𝗘𝗢 𝗖𝗔𝗟𝗟🎥 
+Squirt Show
+• 10 Minutes - ₹1400
 
-5 𝐌𝐈𝐍𝐔𝐓𝐄 - 500  𝐑𝐒
-10𝐌𝐈𝐍𝐔𝐓𝐄'𝐒 - 1000 𝐑𝐒
-15𝐌𝐈𝐍𝐔𝐓𝐄'𝐒 - 1500 𝐑𝐒
-  
-🍷𝗦𝗘𝗫 𝗖𝗛𝗔𝗧🍷
+Oil Show
+• 5 Minutes - ₹700
+• 10 Minutes - ₹1400
 
-  5 𝐌𝐈𝐍𝐔𝐓𝐄 - 300 𝐑𝐒
-10 𝐌𝐈𝐍𝐔𝐓𝐄'𝐒 - 600 𝐑𝐒
+Shower Show
+• 5 Minutes - ₹700
+• 10 Minutes - ₹1500
 
-👩‍❤️‍💋‍👩 𝐋𝐄𝐒𝐁𝐈𝐀𝐍 𝐒𝐇𝐎𝐖 5𝐌𝐈𝐍 -1000𝐑𝐒''')
+━━━━━━━━━━━━━━━
+
+📞 VOICE CALL
+
+• 5 Minutes - ₹250
+• 10 Minutes - ₹350
+• 15 Minutes - ₹500
+
+━━━━━━━━━━━━━━━
+
+🎥 VIDEO CALL
+
+• 5 Minutes - ₹400
+• 10 Minutes - ₹700
+• 15 Minutes - ₹1000
+
+━━━━━━━━━━━━━━━
+
+🍷 SEX CHAT (With Pics)
+
+• 5 Minutes - ₹200
+• 10 Minutes - ₹350
+
+━━━━━━━━━━━━━━━
+
+🔞 TIME PASS = DIRECT BLOCK 🔞
+
+━━━━━━━━━━━━━━━''')
 
 @client.on(events.NewMessage(incoming=True))
 async def auto_reply(event):
@@ -213,58 +231,76 @@ async def help_cmd(event):
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.rl"))
 async def help_cmd(event):
-    await event.edit("""🐣🦋 𝗡𝗔𝗩𝗬𝗔 𝗔𝗩𝗔𝗜𝗟𝗔𝗕𝗟𝗘 🐣🦋
-🔴💦 𝗩𝗘𝗥𝗜𝗙𝗜𝗘𝗗 𝗠𝗢𝗗𝗘𝗟 💦🔴
-    
-           𝐃𝐄𝐌𝐎 𝐂𝐇𝐀𝐑𝐆𝐄
-          1 𝐌𝐈𝐍𝐔𝐓𝐄 - 100 𝐑𝐒
+    await event.edit("""🐣🦋 NAVYA AVAILABLE 🦋🐣
 
-🔞𝐓𝐈𝐌𝐄 𝐏𝐀𝐒𝐒 𝐃𝐈𝐑𝐄𝐂𝐓 𝐁𝐋𝐎C𝐊🔞
+Age: 21
+Figure: 34
 
- AGE - 21 FIGURE - 34  
-  
-𝐁𝐈𝐊𝐍𝐈 𝐒𝐇𝐎𝐖 10 𝐌𝐈𝐍 :- 1500 𝐑𝐒
+━━━━━━━━━━━━━━━
 
-𝐒𝐀𝐑𝐄𝐄 𝐒𝐇𝐎𝐖 10 𝐌𝐈𝐍 - 1500 𝐑𝐒
+💎 DEMO CHARGES
 
-𝐍𝐔𝐃𝐄𝐒 𝐏𝐈𝐂'𝐒 100 𝐑𝐒 𝐏𝐄𝐑 𝐏𝐈𝐂'𝐒
+1 Minute Demo - ₹100
 
-𝐀𝐍𝐀𝐋 𝐒𝐇𝐎𝐖 5 𝐌𝐈𝐍 - 1500 𝐑𝐒
-    
-𝐋𝐀𝐇𝐀𝐍𝐆𝐀 𝐒𝐇𝐎𝐖 1500 𝐑𝐒
+Nude Pics
+• ₹100 - 2 Pics
+• ₹200 - 2 Pics (With Face)
 
-🍷𝗦𝗣𝗘𝗖𝗜𝗔𝗟 𝗦𝗛𝗢𝗪 🍷
+━━━━━━━━━━━━━━━
 
-      🥵𝐂𝐔𝐌 𝐒𝐇𝐎𝐖🥵
-      5 𝐌𝐈𝐍𝐔𝐓𝐄 - 900  𝐑𝐒
-    10 𝐌𝐈𝐍𝐔𝐓𝐄 - 1400 𝐑𝐒
+🍷 SPECIAL SHOWS
 
-      🍸𝐎𝐈𝐋 𝐒𝐇𝐎𝐖🍸
-       5 𝐌𝐈𝐍𝐔𝐓𝐄 - 700
-     10 𝐌𝐈𝐍𝐔𝐓𝐄'𝐒 - 1400
+Bikini Show
+• 10 Minutes - ₹1100
 
-  🛁𝐒𝐇𝐎𝐖𝐄𝐑 𝐒𝐇𝐎𝐖🛁
-       5 𝐌𝐈𝐍𝐔𝐓𝐄 - 700
-  10 𝐌𝐈𝐍𝐔𝐓𝐄'𝐒 - 1500
+Saree Show
+• 10 Minutes - ₹1200
 
-📞𝗩𝗢𝗜𝗖𝗘 𝗖𝗔𝗟𝗟📞
+Lesbian Show
+• 5 Minutes - ₹1000
 
-  5 𝐌𝐈𝐍𝐔𝐓𝐄 - 250 𝐑𝐒
-10 𝐌𝐈𝐍𝐔𝐓𝐄'𝐒  - 500 𝐑𝐒
-15 𝐌𝐈𝐍𝐔𝐓𝐄'𝐒 - 750 𝐑𝐒 
+Anal Show
+• 5 Minutes - ₹1000
 
-  🎥𝗩𝗜𝗗𝗘𝗢 𝗖𝗔𝗟𝗟🎥 
+Squirt Show
+• 10 Minutes - ₹1400
 
-5 𝐌𝐈𝐍𝐔𝐓𝐄 - 500  𝐑𝐒
-10𝐌𝐈𝐍𝐔𝐓𝐄'𝐒 - 1000 𝐑𝐒
-15𝐌𝐈𝐍𝐔𝐓𝐄'𝐒 - 1500 𝐑𝐒
-  
-🍷𝗦𝗘𝗫 𝗖𝗛𝗔𝗧🍷
+Oil Show
+• 5 Minutes - ₹700
+• 10 Minutes - ₹1400
 
-  5 𝐌𝐈𝐍𝐔𝐓𝐄 - 300 𝐑𝐒
-10 𝐌𝐈𝐍𝐔𝐓𝐄'𝐒 - 600 𝐑𝐒
+Shower Show
+• 5 Minutes - ₹700
+• 10 Minutes - ₹1500
 
-👩‍❤️‍💋‍👩 𝐋𝐄𝐒𝐁𝐈𝐀𝐍 𝐒𝐇𝐎𝐖 5𝐌𝐈𝐍 -1000𝐑𝐒
+━━━━━━━━━━━━━━━
+
+📞 VOICE CALL
+
+• 5 Minutes - ₹250
+• 10 Minutes - ₹350
+• 15 Minutes - ₹500
+
+━━━━━━━━━━━━━━━
+
+🎥 VIDEO CALL
+
+• 5 Minutes - ₹400
+• 10 Minutes - ₹700
+• 15 Minutes - ₹1000
+
+━━━━━━━━━━━━━━━
+
+🍷 SEX CHAT (With Pics)
+
+• 5 Minutes - ₹200
+• 10 Minutes - ₹350
+
+━━━━━━━━━━━━━━━
+
+🔞 TIME PASS = DIRECT BLOCK 🔞
+
+━━━━━━━━━━━━━━━
 """)
         
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.spam"))

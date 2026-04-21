@@ -1,15 +1,17 @@
 import os
-from telethon import TelegramClient, events
-from telethon.sessions import StringSession
 import asyncio
 import random
-from flask import Flask
-from threading import Thread
 import time
 from datetime import datetime
+from threading import Thread
+from flask import Flask
+
+from telethon import TelegramClient, events
+from telethon.sessions import StringSession
+from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from openai import OpenAI
-from telethon.tl.functions.contacts import BlockRequest
-from telethon import events
+
+# ---------------- KEEP ALIVE ---------------- #
 
 app = Flask('')
 
@@ -25,13 +27,34 @@ def keep_alive():
     t = Thread(target=run)
     t.start()
 
+# ---------------- TELEGRAM LOGIN ---------------- #
+
 api_id = 20900277
 api_hash = "6a3d761f9be590be4259404f34a1f81e"
-session = "1BVtsOIQBuyZEug8Cibrhs0DTVwNad4D_iJGVL2vtSfKra0cnCp2OoyXih6zwvaud7Jkh5WJj0ar8fOkQKuzNZZw5rRzEC5mKR2W64aFo3ZR8eLjDk3heAxXVoGOvs0S-BM3QTh6k5-CjSFOBI2p_FWQtwu2NsYb114TVijvOWPFVN7hliwQeobJ5Hh-ABSRjRbqE9cryb6H-e2-AoYi-8_cD0cwIIH4dik1IjCYMLcmbwP2Bk_ck2ydA8b9WYLeaoMtHmNowyBoJV_EKvWGi2VTKAmaNOgbN9K0g4jeJuj20EmSydKJDdNuv3ekNH1VakZF4MDmElfYVYRcbYDIrIDa29FPOq08="
+session = "1BVtsOIQBu1ruR2QAnjYc_3sGHfeGTlZ_OTgr9pvbmCkKkcTzS0EXeQHoPTMwXEugdmYx3RqDdUW3eszPg3SNttEo6YhswqOcIvi7ABWKalkCmG3PIxbtkMbqpI3M62pL5Gozbyna-mOM4tN9hRJpB5D_QvHe2xbAIEhWq4bJ-FNNVjRoZDCzx0sNySXR5Y5wqrW7E31IqrjMes9H-djrtXE-ItEb9rUz15K7ySx5_BIXv9dCQPSfSA97tEd8OmvctMaWaYdkm_ov8_EngeKfa835RwIciWcBkswEhGVnwoFFvJ_NJrCbkPW8KCsI6KklWHjB1HQaRAel0NWLQXOlFigHuC0hCdE="
 
 client = TelegramClient(StringSession(session), api_id, api_hash)
 
+# ---------------- SETTINGS ---------------- #
+
+TARGET_GROUP_ID = -1003623091628
 replied_users = set()
+start_time = time.time()
+
+client_ai = OpenAI(api_key="YOUR_OPENAI_KEY")
+
+# ---------------- 24x7 TYPING PRANK ---------------- #
+
+async def fake_typing():
+    while True:
+        try:
+            async with client.action(TARGET_GROUP_ID, 'typing'):
+                await asyncio.sleep(random.randint(6, 12))
+        except Exception as e:
+            print("Typing Error:", e)
+            await asyncio.sleep(15)
+
+# ---------------- BLOCK / UNBLOCK ---------------- #
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.block"))
 async def block_user(event):
@@ -40,27 +63,25 @@ async def block_user(event):
         await client(BlockRequest(entity))
         await event.edit("Blocked.")
 
-
-from telethon.tl.functions.contacts import UnblockRequest
-
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.unblock"))
 async def unblock_user(event):
     if event.is_private:
         await client(UnblockRequest(event.chat_id))
         await event.edit("User unblocked.")
 
-TARGET_GROUP_ID = -1003623091628
+# ---------------- AUTO WELCOME ---------------- #
 
 @client.on(events.ChatAction())
 async def welcome_new_member(event):
     if event.chat_id == TARGET_GROUP_ID:
-        if event.user_joined or event.user_added:
+        if event.user_joined or event.user_added or event.user_approved:
             user = await event.get_user()
             await client.send_message(
                 TARGET_GROUP_ID,
-                f"{user.first_name} ❤️\n\n𝗠𝗘𝗦𝗦𝗔𝗚𝗘 𝗠𝗘 𝗙𝗢𝗥 𝗙𝗨𝗡. 𝗠𝗨𝗔𝗔𝗔𝗛𝗛 💋"
+                f"{user.first_name} ❤️\n𝗠𝗘𝗦𝗦𝗔𝗚𝗘 𝗠𝗘 𝗙𝗢𝗥 𝗙𝗨𝗡. 𝗠𝗨𝗔𝗔𝗔𝗛𝗛 💋"
             )
-    
+
+# ---------------- AUTO PRICE ---------------- #
 
 @client.on(events.NewMessage(incoming=True))
 async def auto_price(event):
@@ -69,11 +90,10 @@ async def auto_price(event):
 
         if user_id not in replied_users:
             replied_users.add(user_id)
-
             await asyncio.sleep(2)
-            await event.respond('''🌸 NAVYA AVAILABLE 🌸
+
+            await event.respond("""🌸 NAVYA AVAILABLE 🌸
 ✅ 100% Trusted & Verified Model
-✨ Available in 20+ Groups
 ━━━━━━━━━━━━━━━
 💬 SEX CHAT
 • 10 Minutes → ₹350
@@ -88,144 +108,32 @@ async def auto_price(event):
 • 5 Minutes → ₹500
 • 10 Minutes → ₹990
 • 20 Minutes → ₹1900
-━━━━━━━━━━━━━━━
-🎁 DEMO (Any One)
-• Voice Confirmation → Free
-• 1 Pic → Free
-• Video Call Demo → ₹100
-━━━━━━━━━━━━━━━
-📩 Book Now for Premium Service''')
+""")
 
-@client.on(events.NewMessage(incoming=True))
-async def auto_reply(event):
-    if event.is_private and not event.out:
-        if event.raw_text.lower() in ["h00000i", "hel000000lo", "h000009y", "he0000009y"]:
-            async with client.action(event.chat_id, 'typing'):
-                await asyncio.sleep(random.randint(2,4))
-            await event.reply(''' wait.. 2 min me aayi ❤️''')
 
-client_ai = OpenAI(api_key="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")
-
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.q (.+)"))
-async def gpt_reply(event):
-    prompt = event.pattern_match.group(1)
-    await event.edit("Thinking...")
-
-    try:
-        response = client_ai.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
-        )
-
-        answer = response.choices[0].message.content
-        await event.edit(answer)
-
-    except Exception as e:
-        await event.edit(f"Error: {e}")
-        
-@client.on(events.NewMessage(incoming=True))
-async def auto_repl(event):
-    if event.is_private and not event.out:
-        if event.raw_text.lower() in ["demo"]:
-            async with client.action(event.chat_id, 'typing'):
-                await asyncio.sleep(random.randint(2,4))
-            await event.reply(''' demo paid hai babe.. 100rs only''')
+# ---------------- UTIL COMMANDS ---------------- #
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.ping"))
 async def ping(event):
     start = time.time()
-    msg = await event.edit("𝙋𝙞𝙣𝙜𝙞𝙣𝙜...")
+    msg = await event.edit("Pinging...")
     end = time.time()
-    await msg.edit(f"𝗣𝗢𝗡𝗚! {round((end-start)*1000)} ms")
-
-async def fake_typing():
-    while True:
-        try:
-            async with client.action(group_id, 'typing'):
-                await asyncio.sleep(4)  # show typing for 4 sec
-        except Exception as e:
-            print("Error:", e)
-            await asyncio.sleep(10)
-
-async def main():
-    await fake_typing()
-
-with client:
-    client.loop.run_until_complete(main())
+    await msg.edit(f"PONG! {round((end-start)*1000)} ms")
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.id"))
 async def get_id(event):
-    await event.edit(f"𝘾𝙃𝘼𝙏 𝙄𝘿: `{event.chat_id}`")
+    await event.edit(f"CHAT ID: `{event.chat_id}`")
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.time"))
 async def time_cmd(event):
     now = datetime.now().strftime("%H:%M:%S")
-    await event.edit(f"𝘾𝙐𝙍𝙍𝙀𝙉𝙏 𝙏𝙄𝙈𝙀: {now}")
+    await event.edit(f"TIME: {now}")
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.userinfo"))
-async def userinfo(event):
-    user = await event.get_sender()
-    await event.edit(
-        f"𝙉𝘼𝙈𝙀: {user.first_name}\n𝙄𝘿: {user.id}"
-    )
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
+async def alive(event):
+    uptime = int(time.time() - start_time)
+    await event.edit(f"⚡ Alive\nUptime: {uptime} sec")
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.del"))
-async def delete(event):
-    if event.reply_to_msg_id:
-        msg = await event.get_reply_message()
-        await msg.delete()
-        await event.delete()
-
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.help"))
-async def help_cmd(event):
-    await event.edit("""
-𝙇𝙄𝙎𝙏 𝙊𝙁 𝙑𝘼𝙇𝙄𝘿 𝘾𝙊𝙈𝙈𝘼𝙉𝘿𝙎:
-• .ping - test
-• .id - int id number
-• .time - time
-• .userinfo - information
-• .del - delete
-• .help - assist
-• .spam - spamming
-• .boost - boost link
-• .alive - run
-• .pay - pay
-• .rl - rate list
-• .block - block user
-• .unblock - unblock user
-• .q - ask chatgpt
-""")
-
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.rl"))
-async def help_cmd(event):
-    await event.edit("""🌸 NAVYA AVAILABLE 🌸
-✅ 100% Trusted & Verified Model
-✨ Available in 20+ Groups
-━━━━━━━━━━━━━━━
-💬 SEX CHAT
-• 10 Minutes → ₹350
-• 20 Minutes → ₹740
-━━━━━━━━━━━━━━━
-📞 VOICE CALL
-• 5 Minutes → ₹220
-• 10 Minutes → ₹450
-• 18 Minutes → ₹890
-━━━━━━━━━━━━━━━
-🎥 VIDEO CALL
-• 5 Minutes → ₹500
-• 10 Minutes → ₹990
-• 20 Minutes → ₹1900
-━━━━━━━━━━━━━━━
-🎁 DEMO (Any One)
-• Voice Confirmation → Free
-• 1 Pic → Free
-• Video Call Demo → ₹100
-━━━━━━━━━━━━━━━
-📩 Book Now for Premium Service
-""")
-        
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.spam"))
 async def spam(event):
     args = event.raw_text.split(maxsplit=2)
@@ -236,60 +144,17 @@ async def spam(event):
     for _ in range(count):
         await client.send_message(event.chat_id, text)
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.boost"))
-async def boost_msg(event):
-    await event.edit("𝘽𝙊𝙊𝙎𝙏 𝙏𝙃𝙄𝙎 𝙂𝙍𝙊𝙐𝙋 t.me/wife_swapping_gf?boost ❤️")
+# ---------------- MAIN ---------------- #
 
-#@client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
-#async def alive_msg(event):
- #   await event.edit("I'm alive my queen.. ❤️")
-
-start_time = time.time()
-
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
-async def alive(event):
-    uptime = int(time.time() - start_time)
-    await event.edit(f"⚡ 𝙕𝙄𝙉𝘿𝘼 𝙃𝙐...\nUptime: {uptime} sec")
-
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.love"))
-async def heart(event):
-    frames = [
-        "❤️",
-        "🧡",
-        "💛",
-        "💚",
-        "💙",
-        "💜",
-        "❤️"
-    ]
-
-    for frame in frames:
-        await event.edit(frame)
-        await asyncio.sleep(0.4)
-
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.pay"))
-async def send_qr(event):
-    await client.send_file(
-        event.chat_id,
-        "qr.jpg",
-        caption="𝙎𝘾𝘼𝙉 𝘼𝙉𝘿 𝙋𝘼𝙔 𝘽𝘼𝘽𝙀 💋"
-    )
-    await event.delete()
-
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.opay"))
-async def send_qr(event):
-    await client.send_file(
-        event.chat_id,
-        "oqr.jpg",
-        caption="𝙎𝘾𝘼𝙉 𝘼𝙉𝘿 𝙋𝘼𝙔 𝘽𝘼𝘽𝙀 💋"
-    )
-    await event.delete()
-    
 async def main():
     await client.start()
     print("Userbot running...")
+
+    client.loop.create_task(fake_typing())
+
     await client.run_until_disconnected()
 
 keep_alive()
+
 with client:
     client.loop.run_until_complete(main())

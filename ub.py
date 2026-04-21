@@ -94,6 +94,22 @@ async def auto_price(event):
 """)
 # ----------
 
+
+PRICE_TEXT = """
+Scan QR and send screenshot after payment.
+"""
+
+QR_IMAGE = "qr.jpg"  
+
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.qr"))
+async def send_price_list(event):
+    await client.send_file(
+        event.chat_id,
+        QR_IMAGE,
+        caption=PRICE_TEXT
+    )
+    await event.delete()
+
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
 async def alive(event):
     uptime = int(time.time() - start_time)

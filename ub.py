@@ -136,6 +136,21 @@ async def price_list(event):
 """
     await event.edit(text)
 
+
+
+PROOF_LINK = "@proofsxnavya"
+
+@client.on(events.NewMessage(incoming=True))
+async def auto_proof_reply(event):
+    if event.is_private:
+        msg = event.raw_text.lower()
+
+        proof_keywords = ["proof", "send proof", "proof?"]
+
+        if any(word in msg for word in proof_keywords):
+            await event.reply(f"Here is the proof:\n{PROOF_LINK}")
+
+
 #-------
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
 async def alive(event):

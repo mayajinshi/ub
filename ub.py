@@ -41,8 +41,6 @@ TARGET_GROUP_ID = -1003623091628
 replied_users = set()
 start_time = time.time()
 
-client_ai = OpenAI(api_key="YOUR_OPENAI_KEY")
-
 # ---------------- 24x7 TYPING PRANK ---------------- #
 
 async def fake_typing():
@@ -53,21 +51,6 @@ async def fake_typing():
         except Exception as e:
             print("Typing Error:", e)
             await asyncio.sleep(15)
-
-# ---------------- BLOCK / UNBLOCK ---------------- #
-
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.block"))
-async def block_user(event):
-    if event.is_private:
-        entity = await client.get_entity(event.chat_id)
-        await client(BlockRequest(entity))
-        await event.edit("Blocked.")
-
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.unblock"))
-async def unblock_user(event):
-    if event.is_private:
-        await client(UnblockRequest(event.chat_id))
-        await event.edit("User unblocked.")
 
 # ---------------- AUTO WELCOME ---------------- #
 
@@ -92,42 +75,24 @@ async def auto_price(event):
             replied_users.add(user_id)
             await asyncio.sleep(2)
 
-            await event.respond("""🌸 NAVYA AVAILABLE 🌸
-✅ 100% Trusted & Verified Model
+            await event.respond("""🌸 𝗡𝗔𝗩𝗬𝗔 𝗔𝗩𝗔𝗜𝗟𝗔𝗕𝗟𝗘 🌸
+✅ 100% ᴛʀᴜꜱᴛᴇᴅ & ᴠᴇʀɪꜰɪᴇᴅ ᴍᴏᴅᴇʟ
 ━━━━━━━━━━━━━━━
-💬 SEX CHAT
-• 10 Minutes → ₹350
-• 20 Minutes → ₹740
+💬 𝗦𝗘𝗫 𝗖𝗛𝗔𝗧
+• 10 ᴍɪɴᴜᴛᴇꜱ → ₹350
+• 20 ᴍɪɴᴜᴛᴇꜱ → ₹740
 ━━━━━━━━━━━━━━━
-📞 VOICE CALL
-• 5 Minutes → ₹220
-• 10 Minutes → ₹450
-• 18 Minutes → ₹890
+📞 𝗩𝗢𝗜𝗖𝗘 𝗖𝗔𝗟𝗟
+• 5 ᴍɪɴᴜᴛᴇꜱ → ₹220
+• 10 ᴍɪɴᴜᴛᴇꜱ → ₹450
+• 18 ᴍɪɴᴜᴛᴇꜱ → ₹890
 ━━━━━━━━━━━━━━━
-🎥 VIDEO CALL
-• 5 Minutes → ₹500
-• 10 Minutes → ₹990
-• 20 Minutes → ₹1900
+🎥 𝗩𝗜𝗗𝗘𝗢 𝗖𝗔𝗟𝗟
+• 5 ᴍɪɴᴜᴛᴇꜱ → ₹500
+• 10 ᴍɪɴᴜᴛᴇꜱ → ₹990
+• 20 ᴍɪɴᴜᴛᴇꜱ → ₹1900
 """)
-
-
-# ---------------- UTIL COMMANDS ---------------- #
-
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.ping"))
-async def ping(event):
-    start = time.time()
-    msg = await event.edit("Pinging...")
-    end = time.time()
-    await msg.edit(f"PONG! {round((end-start)*1000)} ms")
-
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.id"))
-async def get_id(event):
-    await event.edit(f"CHAT ID: `{event.chat_id}`")
-
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.time"))
-async def time_cmd(event):
-    now = datetime.now().strftime("%H:%M:%S")
-    await event.edit(f"TIME: {now}")
+# ----------
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
 async def alive(event):

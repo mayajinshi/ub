@@ -7,7 +7,9 @@ from threading import Thread
 from flask import Flask
 from telethon import TelegramClient, events
 from telethon.sessions import StringSession
-
+from telethon import events
+from telethon.tl.functions.users import GetFullUserRequest
+import re
 # ================== KEEP ALIVE ================== #
 
 app = Flask('')
@@ -95,6 +97,33 @@ async def auto_delete_group(event):
             pass
 
 # ================== BASIC COMMANDS ================== #
+
+
+
+# Patterns to detect usernames/links in bio
+BIO_PATTERNS = [
+    r'@\w+',
+    r'http[s]?://',
+    r't\.me/',
+    r'telegram\.me/',
+    r'www\.'
+]
+
+@client.on(events.NewMessage())
+async def bio_link_filter(event):
+    try:
+        sender = await event.get_sender()
+        full = await client(GetFullUserRequest(sender.id))
+        bio = full.full_user.about or ""
+
+        # Check if bio contains username or link
+        if any(re.search(pattern, bio, re.IGNORECASE) for pattern in BIO_PATTERNS):
+            await event.delete()
+            print(f"Deleted message from {sender.id} بسبب bio link/username")
+
+    except Exception as e:
+        print("Error:", e)
+        
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
 async def alive(event):

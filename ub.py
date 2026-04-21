@@ -71,76 +71,30 @@ async def auto_price(event):
             replied_users.add(user_id)
 
             await asyncio.sleep(2)
-            await event.respond('''🐣🦋 NAVYA AVAILABLE 🦋🐣
-
-Age: 21
-Figure: 34
-
+            await event.respond('''🌸 NAVYA AVAILABLE 🌸
+✅ 100% Trusted & Verified Model
+✨ Available in 20+ Groups
 ━━━━━━━━━━━━━━━
-
-💎 DEMO CHARGES
-
-1 Minute Demo - ₹100
-
-Nude Pics
-• ₹100 - 2 Pics
-• ₹200 - 2 Pics (With Face)
-
+💬 SEX CHAT
+• 10 Minutes → ₹350
+• 20 Minutes → ₹740
 ━━━━━━━━━━━━━━━
-
-🍷 SPECIAL SHOWS
-
-Bikini Show
-• 10 Minutes - ₹1100
-
-Saree Show
-• 10 Minutes - ₹1200
-
-Lesbian Show
-• 5 Minutes - ₹1000
-
-Anal Show
-• 5 Minutes - ₹1000
-
-Squirt Show
-• 10 Minutes - ₹1400
-
-Oil Show
-• 5 Minutes - ₹700
-• 10 Minutes - ₹1400
-
-Shower Show
-• 5 Minutes - ₹700
-• 10 Minutes - ₹1500
-
-━━━━━━━━━━━━━━━
-
 📞 VOICE CALL
-
-• 5 Minutes - ₹250
-• 10 Minutes - ₹350
-• 15 Minutes - ₹500
-
+• 5 Minutes → ₹220
+• 10 Minutes → ₹450
+• 18 Minutes → ₹890
 ━━━━━━━━━━━━━━━
-
 🎥 VIDEO CALL
-
-• 5 Minutes - ₹400
-• 10 Minutes - ₹700
-• 15 Minutes - ₹1000
-
+• 5 Minutes → ₹500
+• 10 Minutes → ₹990
+• 20 Minutes → ₹1900
 ━━━━━━━━━━━━━━━
-
-🍷 SEX CHAT (With Pics)
-
-• 5 Minutes - ₹200
-• 10 Minutes - ₹350
-
+🎁 DEMO (Any One)
+• Voice Confirmation → Free
+• 1 Pic → Free
+• Video Call Demo → ₹100
 ━━━━━━━━━━━━━━━
-
-🔞 TIME PASS = DIRECT BLOCK 🔞
-
-━━━━━━━━━━━━━━━''')
+📩 Book Now for Premium Service''')
 
 @client.on(events.NewMessage(incoming=True))
 async def auto_reply(event):
@@ -231,76 +185,30 @@ async def help_cmd(event):
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.rl"))
 async def help_cmd(event):
-    await event.edit("""🐣🦋 NAVYA AVAILABLE 🦋🐣
-
-Age: 21
-Figure: 34
-
+    await event.edit("""🌸 NAVYA AVAILABLE 🌸
+✅ 100% Trusted & Verified Model
+✨ Available in 20+ Groups
 ━━━━━━━━━━━━━━━
-
-💎 DEMO CHARGES
-
-1 Minute Demo - ₹100
-
-Nude Pics
-• ₹100 - 2 Pics
-• ₹200 - 2 Pics (With Face)
-
+💬 SEX CHAT
+• 10 Minutes → ₹350
+• 20 Minutes → ₹740
 ━━━━━━━━━━━━━━━
-
-🍷 SPECIAL SHOWS
-
-Bikini Show
-• 10 Minutes - ₹1100
-
-Saree Show
-• 10 Minutes - ₹1200
-
-Lesbian Show
-• 5 Minutes - ₹1000
-
-Anal Show
-• 5 Minutes - ₹1000
-
-Squirt Show
-• 10 Minutes - ₹1400
-
-Oil Show
-• 5 Minutes - ₹700
-• 10 Minutes - ₹1400
-
-Shower Show
-• 5 Minutes - ₹700
-• 10 Minutes - ₹1500
-
-━━━━━━━━━━━━━━━
-
 📞 VOICE CALL
-
-• 5 Minutes - ₹250
-• 10 Minutes - ₹350
-• 15 Minutes - ₹500
-
+• 5 Minutes → ₹220
+• 10 Minutes → ₹450
+• 18 Minutes → ₹890
 ━━━━━━━━━━━━━━━
-
 🎥 VIDEO CALL
-
-• 5 Minutes - ₹400
-• 10 Minutes - ₹700
-• 15 Minutes - ₹1000
-
+• 5 Minutes → ₹500
+• 10 Minutes → ₹990
+• 20 Minutes → ₹1900
 ━━━━━━━━━━━━━━━
-
-🍷 SEX CHAT (With Pics)
-
-• 5 Minutes - ₹200
-• 10 Minutes - ₹350
-
+🎁 DEMO (Any One)
+• Voice Confirmation → Free
+• 1 Pic → Free
+• Video Call Demo → ₹100
 ━━━━━━━━━━━━━━━
-
-🔞 TIME PASS = DIRECT BLOCK 🔞
-
-━━━━━━━━━━━━━━━
+📩 Book Now for Premium Service
 """)
         
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.spam"))

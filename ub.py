@@ -1,50 +1,48 @@
 import os
-import time
 import asyncio
 import random
-import logging
+import time
+from datetime import datetime
 from threading import Thread
 from flask import Flask
+
 from telethon import TelegramClient, events
 from telethon.sessions import StringSession
-from telethon import events
-from telethon.tl.functions.users import GetFullUserRequest
-import re
-# ================== KEEP ALIVE ================== #
+from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
+from telethon.tl.types import MessageEntityMentionName
 
-app = Flask('')
+# ---------------- WEB SERVER ---------------- #
+
+app = Flask(__name__)
 
 @app.route('/')
 def home():
     return "adubot is alive"
 
-def run():
+def run_web():
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
 
 def keep_alive():
-    t = Thread(target=run)
-    t.start()
+    Thread(target=run_web).start()
 
-# ================== LOGGING ================== #
-
-logging.basicConfig(
-    level=logging.INFO,
-    format='[%(asctime)s] %(levelname)s - %(message)s'
-)
-
-# ================== TELEGRAM CONFIG ================== #
+# ---------------- TELEGRAM CONFIG ---------------- #
 
 api_id = 32135350
-api_hash = "7c9832d6ef116e3d75ac843dbc1bbbad"
+api_hash = '7c9832d6ef116e3d75ac843dbc1bbbad'
 session = "1BVtsOIMBuzIfQb4ZqhUsR2N_sDI29Rjskwc3A88q87wUjhXq5YGDqYakC6OKEUdocAMClrgQw6yN4-Sz2XrVFNidsLa65UHSdRzeK9_3gkzE9zdUU58ovmUEFlcKQ_qnYu5m0njGMv6ccCIzNpse8nfsBiNw-1sE1I5xm_6Q6iXraLXG8Z0rMsQPBwtW9f2-YJxV6gzNEGQxY4Q1zEUTfT0dd9OsW8nimhEYKm81-1DnvTb1B6jh_VnN-ZCZ9pJWThY_oAJNCvV8Znls4bDQEv1daDiKTe99_iH1gClzY-vOlDOUkoPRR_3HdJ8rDMHaLJPLb-GV3HXZQCV5b8243NmC9STM3hY="
 
 client = TelegramClient(StringSession(session), api_id, api_hash)
 
 TARGET_GROUP_ID = -1003623091628
+GROUP_LINK = "@WIFE_SWAPPING_GF"
+
+replied_users = set()
 start_time = time.time()
 
-# ================== AUTO TYPING ================== #
+quotes = ["Hi", "Hii", "Addd Mee", "Heloo", "Nice"]
+
+# ---------------- BACKGROUND TASKS ---------------- #
 
 async def fake_typing():
     while True:
@@ -52,194 +50,158 @@ async def fake_typing():
             async with client.action(TARGET_GROUP_ID, 'typing'):
                 await asyncio.sleep(random.randint(6, 12))
         except Exception as e:
-            logging.error(f"Typing error: {e}")
-            await asyncio.sleep(10)
+            print("Typing Error:", e)
+            await asyncio.sleep(15)
 
-# ================== PRIVATE AUTO REPLY ================== #
+async def send_quotes():
+    while True:
+        dialogs = await client.get_dialogs()
+        for dialog in dialogs:
+            if dialog.is_group:
+                try:
+                    await client.send_message(dialog.id, random.choice(quotes))
+                    await asyncio.sleep(7)
+                except Exception:
+                    pass
+        await asyncio.sleep(300)
 
-GREETING_TEXT = '''🐣🦋 𝗦𝗘𝗥𝗩𝗜𝗖𝗘 𝗔𝗩𝗔𝗜𝗟𝗔𝗕𝗟𝗘 🐣🦋
-
-🍒 𝗩𝗢𝗜𝗖𝗘 𝗖𝗔𝗟𝗟
-5 MIN - 200 RS
-10 MIN - 350 RS
-
-🎀 𝗩𝗜𝗗𝗘𝗢 𝗖𝗔𝗟𝗟
-5 MIN - 500 RS
-10 MIN - 800 RS
-
-🌟 𝗦𝗘𝗫 𝗖𝗛𝗔𝗧
-5 MIN - 200 RS
-10 MIN - 350 RS
-
-💟 DEMO - 100 RS'''
+# ---------------- PRIVATE AUTO REPLY ---------------- #
 
 @client.on(events.NewMessage(incoming=True))
 async def private_auto_reply(event):
-    try:
-        if event.is_private and not event.out:
-            text = event.raw_text.lower()
-            if text in ["hi", "hello", "hey", "hii", "hy", "hyy"]:
-                async with client.action(event.chat_id, 'typing'):
-                    await asyncio.sleep(random.randint(2, 4))
-                await event.reply(GREETING_TEXT)
-    except Exception as e:
-        logging.error(f"Auto reply error: {e}")
+    if event.is_private and not event.out:
+        user_id = event.sender_id
+        msg = event.raw_text.lower()
 
-# ================== AUTO DELETE ================== #
+        # first auto reply
+        if user_id not in replied_users:
+            replied_users.add(user_id)
 
-@client.on(events.NewMessage(incoming=True))
-async def auto_delete_group(event):
-    if event.is_group:
-        await asyncio.sleep(120)
-        try:
-            await event.delete()
-        except:
-            pass
+            await asyncio.sleep(2)
 
-# ================== BASIC COMMANDS ================== #
+            await event.respond(
+                f"🌸 NAVYA AVAILABLE 🌸\n\n"
+                f"Please join our group:\n{GROUP_LINK}\n\n"
+                f"After joining, message me again 💋"
+            )
 
+# ---------------- KEYWORD REPLY ---------------- #
 
+@client.on(events.NewMessage(incoming=True, pattern=r'(?i)^demo$'))
+async def demo_reply(event):
+    if event.is_private:
+        await event.reply("demo paid hai babe.. 100rs only")
 
-# Patterns to detect usernames/links in bio
-BIO_PATTERNS = [
-    r'@\w+',
-    r'http[s]?://',
-    r't\.me/',
-    r'telegram\.me/',
-    r'www\.'
-]
+# ---------------- GROUP WELCOME ---------------- #
 
-@client.on(events.NewMessage())
-async def bio_link_filter(event):
-    try:
-        sender = await event.get_sender()
-        full = await client(GetFullUserRequest(sender.id))
-        bio = full.full_user.about or ""
+@client.on(events.ChatAction(chats=TARGET_GROUP_ID))
+async def welcome_new_user(event):
+    if event.user_joined or event.user_added:
+        users = await event.get_users()
 
-        # Check if bio contains username or link
-        if any(re.search(pattern, bio, re.IGNORECASE) for pattern in BIO_PATTERNS):
-            await event.delete()
-            print(f"Deleted message from {sender.id} بسبب bio link/username")
+        for user in users:
+            name = user.first_name or "User"
+            message = f"Hello {name}, DM ME FOR FUN BABY 💋"
 
-    except Exception as e:
-        print("Error:", e)
-        
+            entity = MessageEntityMentionName(
+                offset=6,
+                length=len(name),
+                user_id=user.id
+            )
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
-async def alive(event):
-    await event.edit("I'm alive my queen.. ❤️")
+            await client.send_message(
+                TARGET_GROUP_ID,
+                message,
+                formatting_entities=[entity]
+            )
+
+# ---------------- COMMANDS ---------------- #
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"\.ping"))
 async def ping(event):
     start = time.time()
     msg = await event.edit("Pinging...")
     end = time.time()
-    ms = round((end - start) * 1000, 2)
-    await msg.edit(f"🏓 Pong: {ms} ms")
+    await msg.edit(f"PONG! {round((end-start)*1000)} ms")
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.uptime"))
-async def uptime(event):
-    seconds = int(time.time() - start_time)
-    hrs = seconds // 3600
-    mins = (seconds % 3600) // 60
-    secs = seconds % 60
-    await event.edit(f"⏳ Uptime: {hrs}h {mins}m {secs}s")
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.id"))
+async def get_id(event):
+    await event.edit(f"CHAT ID: `{event.chat_id}`")
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.boost"))
-async def boost(event):
-    await event.edit("𝘽𝙊𝙊𝙎𝙏 𝙏𝙃𝙄𝙎 𝙂𝙍𝙊𝙐𝙋 💋\nt.me/wife_swapping_gf?boost ❤️")
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.time"))
+async def time_cmd(event):
+    now = datetime.now().strftime("%H:%M:%S")
+    await event.edit(f"CURRENT TIME: {now}")
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.boostshiv"))
-async def boostshiv(event):
-    await event.edit("𝘽𝙊𝙊𝙎𝙏 𝙏𝙃𝙄𝙎 𝘾𝙃𝘼𝙉𝙉𝙀𝙇 💋\nt.me/thnxshiv?boost ❤️")
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.alive"))
+async def alive(event):
+    uptime = int(time.time() - start_time)
+    await event.edit(f"⚡ Alive\nUptime: {uptime} sec")
 
-# ================== FUN COMMANDS ================== #
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.block"))
+async def block_user(event):
+    if event.is_private:
+        await client(BlockRequest(event.chat_id))
+        await event.edit("Blocked.")
 
-@client.on(events.NewMessage(pattern=r"\.love"))
-async def love(event):
-    frames = ["🤍", "💛", "🧡", "❤️", "💖", "💞", "💕", "💘 I Love You 💘"]
-    for f in frames:
-        await event.edit(f)
-        await asyncio.sleep(0.5)
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.unblock"))
+async def unblock_user(event):
+    if event.is_private:
+        await client(UnblockRequest(event.chat_id))
+        await event.edit("Unblocked.")
 
-@client.on(events.NewMessage(pattern=r"\.hack"))
-async def hack(event):
-    steps = [
-        "Initializing hack...",
-        "Connecting...",
-        "Bypassing firewall...",
-        "Injecting payload...",
-        "Access Granted!",
-        "💀 Target hacked!"
-    ]
-    for s in steps:
-        await event.edit(s)
-        await asyncio.sleep(1)
-
-@client.on(events.NewMessage(pattern=r"\.type (.+)"))
-async def type_cmd(event):
-    text = event.pattern_match.group(1)
-    await event.edit("")
-    current = ""
-    for char in text:
-        current += char
-        await event.edit(current)
-        await asyncio.sleep(0.08)
-
-@client.on(events.NewMessage(pattern=r"\.spam (\d+) (.+)"))
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.spam"))
 async def spam(event):
-    count = int(event.pattern_match.group(1))
-    text = event.pattern_match.group(2)
+    args = event.raw_text.split(maxsplit=2)
+    if len(args) < 3:
+        return await event.edit("Usage: .spam count text")
 
-    if count > 20:
-        return await event.edit("Spam limit is 20.")
+    count = int(args[1])
+    text = args[2]
 
     await event.delete()
 
     for _ in range(count):
-        await event.respond(text)
-        await asyncio.sleep(0.3)
+        await client.send_message(event.chat_id, text)
 
-# ================== QR PAYMENT ================== #
+@client.on(events.NewMessage(outgoing=True, pattern=r"\.rl"))
+async def price_list(event):
+    text = """
+🌸 NAVYA AVAILABLE 🌸
+💬 SEX CHAT
+• 10 min → ₹350
+• 20 min → ₹740
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.pay"))
-async def pay(event):
-    await client.send_file(
-        event.chat_id,
-        "qr.jpg",
-        caption="scan and pay karo"
-    )
-    await event.delete()
+📞 VOICE CALL
+• 5 min → ₹220
+• 10 min → ₹450
 
-# ================== HELP MENU ================== #
+🎥 VIDEO CALL
+• 5 min → ₹500
+• 10 min → ₹990
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"\.help"))
-async def help_menu(event):
-    await event.edit("""
-⚡ USERBOT COMMANDS ⚡
+Send payment screenshot after payment.
+"""
+    await event.edit(text)
 
-.alive
-.ping
-.uptime
-.boost
-.boostshiv
-.love
-.hack
-.type text
-.spam count text
-.pay
-.help
-""")
-
-# ================== MAIN ================== #
+@client.on(events.NewMessage(chats=TARGET_GROUP_ID))
+async def auto_delete_group_messages(event):
+    try:
+        await asyncio.sleep(120)
+        await event.delete()
+    except Exception as e:
+        print("Auto-delete error:", e)
+        
+# ---------------- MAIN ---------------- #
 
 async def main():
     await client.start()
-    logging.info("Userbot running...")
-    client.loop.create_task(fake_typing())
+    print("Userbot running...")
+
+    asyncio.create_task(fake_typing())
+    asyncio.create_task(send_quotes())
+
     await client.run_until_disconnected()
 
 keep_alive()
-
-with client:
-    client.loop.run_until_complete(main())
+asyncio.run(main())

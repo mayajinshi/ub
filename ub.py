@@ -97,6 +97,10 @@ async def auto_price(event):
 
 
 PRICE_TEXT = """
+Scan the QR or Tap on the link to pay.
+
+     tinyurl.com/gfnavya 
+
 Send screenshot after payment.
 """
 
